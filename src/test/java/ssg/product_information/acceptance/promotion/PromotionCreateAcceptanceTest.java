@@ -1,5 +1,6 @@
 package ssg.product_information.acceptance.promotion;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -223,6 +224,22 @@ public class PromotionCreateAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(result.getMessage()).isEqualTo("마감일은 시작일 이전일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("프로모션에 포함된 상품이 없는 경우")
+    void noItem() {
+        // given
+        PromotionCreateRequest request
+                = new PromotionCreateRequest("쓱데이", 0.05, "2022-06-10", "2022-07-25", Collections.emptyList());
+
+        // when
+        ExtractableResponse<Response> response = 새로운_프로모션_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("프로모션에는 하나 이상의 상품이 포함되어야 합니다.");
     }
 
     private Long itemCreate(ItemCreateRequest item) {

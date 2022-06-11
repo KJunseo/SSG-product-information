@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.persistence.*;
 
 import ssg.product_information.exception.promotion.PromotionDisplayPeriodException;
+import ssg.product_information.exception.promotion.PromotionItemNumberException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.item.domain.Item;
 
@@ -82,6 +83,9 @@ public class Promotion {
     }
 
     public void addItems(List<Item> items) {
+        if (items.isEmpty()) {
+            throw new PromotionItemNumberException();
+        }
         List<PromotionItem> promotionItems = items.stream()
                                                   .map(item -> new PromotionItem(this, item))
                                                   .collect(Collectors.toList());

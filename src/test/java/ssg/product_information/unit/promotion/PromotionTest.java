@@ -1,12 +1,14 @@
 package ssg.product_information.unit.promotion;
 
 import java.time.LocalDate;
+import java.util.Collections;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import ssg.product_information.exception.item.ItemDisplayPeriodException;
 import ssg.product_information.exception.promotion.PromotionDisplayPeriodException;
+import ssg.product_information.exception.promotion.PromotionItemNumberException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.promotion.domain.Promotion;
 
@@ -79,5 +81,19 @@ class PromotionTest {
         // when & then
         assertThatThrownBy(() -> new Promotion("쓱데이", discountAmount, start, end))
                 .isInstanceOf(PromotionDisplayPeriodException.class);
+    }
+
+    @Test
+    @DisplayName("프로모션에 0개의 상품이 들어올 수 없다.")
+    void wrongItemNumber() {
+        // given
+        LocalDate start = LocalDate.of(2022, 6, 15);
+        LocalDate end = LocalDate.of(2022, 7, 15);
+        int discountAmount = 1000;
+        Promotion promotion = new Promotion("쓱데이", discountAmount, start, end);
+
+        // when & then
+        assertThatThrownBy(() -> promotion.addItems(Collections.emptyList()))
+                .isInstanceOf(PromotionItemNumberException.class);
     }
 }

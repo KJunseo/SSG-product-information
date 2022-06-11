@@ -132,3 +132,6 @@ include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountRate/http-resp
 
 ===== 마감일이 시작일 이전인 경우
 include::{snippets}/PromotionCreateAcceptanceTest/wrongPeriod/http-response.adoc[]
+
+===== 상품이 하나도 포함되지 않은 경우
+include::{snippets}/PromotionCreateAcceptanceTest/noItem/http-response.adoc[]
