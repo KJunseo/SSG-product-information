@@ -25,4 +25,12 @@ public class PromotionItem {
         this.promotion = promotion;
         this.item = item;
     }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public Item getItem() {
+        return item;
+    }
 }

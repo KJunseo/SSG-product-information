@@ -135,3 +135,6 @@ include::{snippets}/PromotionCreateAcceptanceTest/wrongPeriod/http-response.adoc
 
 ===== 상품이 하나도 포함되지 않은 경우
 include::{snippets}/PromotionCreateAcceptanceTest/noItem/http-response.adoc[]
+
+===== 프로모션 기간 동안 하루라도 전시되지 않는 상품이 프로모션에 포함된 경우
+include::{snippets}/PromotionCreateAcceptanceTest/invalidPeriodItemInPromotion/http-response.adoc[]

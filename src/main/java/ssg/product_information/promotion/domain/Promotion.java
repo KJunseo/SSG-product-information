@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 
-import ssg.product_information.exception.promotion.PromotionDisplayPeriodException;
+import ssg.product_information.exception.promotion.PromotionPeriodException;
 import ssg.product_information.exception.promotion.PromotionItemNumberException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.item.domain.Item;
@@ -64,7 +64,7 @@ public class Promotion {
 
     private void validates(Integer discountAmount, Double discountRate, LocalDate startDate, LocalDate endDate) {
         validatesDiscountPolicy(discountAmount, discountRate);
-        validatesDisplayPeriod(startDate, endDate);
+        validatesPromotionPeriod(startDate, endDate);
     }
 
     private void validatesDiscountPolicy(Integer discountAmount, Double discountRate) {
@@ -76,9 +76,9 @@ public class Promotion {
         }
     }
 
-    private void validatesDisplayPeriod(LocalDate startDate, LocalDate endDate) {
+    private void validatesPromotionPeriod(LocalDate startDate, LocalDate endDate) {
         if (endDate.isBefore(startDate)) {
-            throw new PromotionDisplayPeriodException();
+            throw new PromotionPeriodException();
         }
     }
 
@@ -89,7 +89,14 @@ public class Promotion {
         List<PromotionItem> promotionItems = items.stream()
                                                   .map(item -> new PromotionItem(this, item))
                                                   .collect(Collectors.toList());
+        validatesItemDisplayPeriod(promotionItems);
         this.promotionItems.addAll(promotionItems);
+    }
+
+    private void validatesItemDisplayPeriod(List<PromotionItem> promotionItems) {
+        promotionItems.stream()
+                      .map(PromotionItem::getItem)
+                      .forEach(item -> item.checkDisplayPeriod(this.promotionStartDate, this.promotionEndDate));
     }
 
     public Long getId() {

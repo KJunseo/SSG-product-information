@@ -242,6 +242,28 @@ public class PromotionCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("프로모션에는 하나 이상의 상품이 포함되어야 합니다.");
     }
 
+    @Test
+    @DisplayName("프로모션에 포함된 상품 중 하나라도 프로모션 기간에 전시되지 않는다면 프로모션을 생성할 수 없다.")
+    void invalidPeriodItemInPromotion() {
+        // given
+        ItemCreateRequest item1
+                = new ItemCreateRequest("새콤달콤", "일반", 500, "2022-06-10", "2022-08-20");
+        ItemCreateRequest item2
+                = new ItemCreateRequest("무뚝뚝감자칩", "일반", 1500, "2022-05-10", "2022-08-31");
+        List<Long> itemIds = List.of(itemCreate(item1), itemCreate(item2));
+
+        PromotionCreateRequest request
+                = new PromotionCreateRequest("쓱데이", 0.05, "2022-06-01", "2022-06-30", itemIds);
+
+        // when
+        ExtractableResponse<Response> response = 새로운_프로모션_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("프로모션에 포함된 상품의 전시 기간이 올바르지 않습니다.");
+    }
+
     private Long itemCreate(ItemCreateRequest item) {
         ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(item);
         String location = response.header("Location");

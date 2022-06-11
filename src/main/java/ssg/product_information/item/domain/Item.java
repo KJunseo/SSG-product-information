@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import ssg.product_information.exception.item.ItemDisplayPeriodException;
+import ssg.product_information.exception.promotion.PromotionItemDisplayPeriodException;
 import ssg.product_information.promotion.domain.PromotionItem;
 
 @Entity
@@ -50,6 +51,12 @@ public class Item {
     private void validatesDisplayPeriod(LocalDate startDate, LocalDate endDate) {
         if (endDate.isBefore(startDate)) {
             throw new ItemDisplayPeriodException();
+        }
+    }
+
+    public void checkDisplayPeriod(LocalDate startDate, LocalDate endDate) {
+        if (itemDisplayStartDate.isAfter(startDate) || itemDisplayEndDate.isBefore(endDate)) {
+            throw new PromotionItemDisplayPeriodException();
         }
     }
 
