@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import ssg.product_information.exception.item.ItemDisplayPeriodException;
+import ssg.product_information.exception.promotion.PromotionDisplayPeriodException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.promotion.domain.Promotion;
 
@@ -24,7 +26,7 @@ class PromotionTest {
 
         // when & then
         assertThatNoException()
-                .isThrownBy(() -> new Promotion("쓱데이", discountAmount, null, start, end));
+                .isThrownBy(() -> new Promotion("쓱데이", discountAmount, start, end));
     }
 
     @Test
@@ -37,7 +39,7 @@ class PromotionTest {
 
         // when & then
         assertThatNoException()
-                .isThrownBy(() -> new Promotion("쓱데이", null, discountRate, start, end));
+                .isThrownBy(() -> new Promotion("쓱데이", discountRate, start, end));
     }
 
     @Test
@@ -52,5 +54,18 @@ class PromotionTest {
         // when & then
         assertThatThrownBy(() -> new Promotion("쓱데이", discountAmount, discountRate, start, end))
                 .isInstanceOf(ViolateDiscountPolicyException.class);
+    }
+
+    @Test
+    @DisplayName("프로모션 시작일이 프로모션 마감일 이전이라면 예외가 발생한다.")
+    void wrongPeriod() {
+        // given
+        LocalDate start = LocalDate.of(2022, 7, 15);
+        LocalDate end = LocalDate.of(2022, 6, 15);
+        int discountAmount = 1000;
+
+        // when & then
+        assertThatThrownBy(() -> new Promotion("쓱데이", discountAmount, start, end))
+                .isInstanceOf(PromotionDisplayPeriodException.class);
     }
 }

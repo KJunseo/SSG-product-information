@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
-import ssg.product_information.exception.item.DisplayPeriodException;
+import ssg.product_information.exception.item.ItemDisplayPeriodException;
 import ssg.product_information.promotion.domain.PromotionItem;
 
 @Entity
@@ -49,7 +49,7 @@ public class Item {
 
     private void validatesDisplayPeriod(LocalDate startDate, LocalDate endDate) {
         if (endDate.isBefore(startDate)) {
-            throw new DisplayPeriodException();
+            throw new ItemDisplayPeriodException();
         }
     }
 
