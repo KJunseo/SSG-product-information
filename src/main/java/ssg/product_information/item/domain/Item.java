@@ -1,10 +1,11 @@
 package ssg.product_information.item.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+import ssg.product_information.exception.item.DisplayPeriodException;
 import ssg.product_information.promotion.domain.PromotionItem;
 
 @Entity
@@ -21,10 +22,62 @@ public class Item {
 
     private Integer itemPrice;
 
-    private LocalDateTime itemDisplayStartDate;
+    private LocalDate itemDisplayStartDate;
 
-    private LocalDateTime itemDisplayEndDate;
+    private LocalDate itemDisplayEndDate;
 
     @OneToMany(mappedBy = "item")
     private List<PromotionItem> promotionItems = new ArrayList<>();
+
+    protected Item() {
+    }
+
+    public Item(
+            String itemName,
+            ItemType itemType,
+            Integer itemPrice,
+            LocalDate itemDisplayStartDate,
+            LocalDate itemDisplayEndDate
+    ) {
+        validatesDisplayPeriod(itemDisplayStartDate, itemDisplayEndDate);
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.itemPrice = itemPrice;
+        this.itemDisplayStartDate = itemDisplayStartDate;
+        this.itemDisplayEndDate = itemDisplayEndDate;
+    }
+
+    private void validatesDisplayPeriod(LocalDate startDate, LocalDate endDate) {
+        if (endDate.isBefore(startDate)) {
+            throw new DisplayPeriodException();
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public Integer getItemPrice() {
+        return itemPrice;
+    }
+
+    public LocalDate getItemDisplayStartDate() {
+        return itemDisplayStartDate;
+    }
+
+    public LocalDate getItemDisplayEndDate() {
+        return itemDisplayEndDate;
+    }
+
+    public List<PromotionItem> getPromotionItems() {
+        return promotionItems;
+    }
 }
