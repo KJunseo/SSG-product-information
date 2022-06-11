@@ -203,6 +203,28 @@ public class PromotionCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("할인율은 음수가 될 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("프로모션 마감일은 프로모션 시작일 이전일 수 없다.")
+    void wrongPeriod() {
+        // given
+        ItemCreateRequest item1
+                = new ItemCreateRequest("새콤달콤", "일반", 500, "2022-06-10", "2022-08-31");
+        ItemCreateRequest item2
+                = new ItemCreateRequest("무뚝뚝감자칩", "일반", 1500, "2022-06-10", "2022-08-31");
+        List<Long> itemIds = List.of(itemCreate(item1), itemCreate(item2));
+
+        PromotionCreateRequest request
+                = new PromotionCreateRequest("쓱데이", 0.05, "2022-07-10", "2022-06-25", itemIds);
+
+        // when
+        ExtractableResponse<Response> response = 새로운_프로모션_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("마감일은 시작일 이전일 수 없습니다.");
+    }
+
     private Long itemCreate(ItemCreateRequest item) {
         ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(item);
         String location = response.header("Location");

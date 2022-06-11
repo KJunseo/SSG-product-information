@@ -129,3 +129,6 @@ include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountAmount/http-re
 
 ===== 할인율이 음수로 들어온 경우
 include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountRate/http-response.adoc[]
+
+===== 마감일이 시작일 이전인 경우
+include::{snippets}/PromotionCreateAcceptanceTest/wrongPeriod/http-response.adoc[]
