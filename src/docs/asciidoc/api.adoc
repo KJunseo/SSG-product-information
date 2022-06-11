@@ -66,3 +66,18 @@ include::{snippets}/ItemCreateAcceptanceTest/createItem/http-request.adoc[]
 ==== Response
 ===== 성공
 include::{snippets}/ItemCreateAcceptanceTest/createItem/http-response.adoc[]
+
+===== 이름이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 타입이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptytype/http-response.adoc[]
+
+===== 가격이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyPrice/http-response.adoc[]
+
+===== 시작일이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyStart/http-response.adoc[]
+
+===== 마감일이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyEnd/http-response.adoc[]

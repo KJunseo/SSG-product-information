@@ -1,16 +1,29 @@
 package ssg.product_information.item.presentation.dto.request;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class ItemCreateRequest {
+
+    @NotBlank(message = "이름은 비어있을 수 없습니다.")
     private String name;
+
+    @NotBlank(message = "타입은 비어있을 수 없습니다.")
     private String type;
-    private int price;
+
+    @NotNull(message = "가격은 비어있을 수 없습니다.")
+    private Integer price;
+
+    @NotBlank(message = "시작일은 비어있을 수 없습니다.")
     private String start;
+
+    @NotBlank(message = "마감일은 비어있을 수 없습니다.")
     private String end;
 
     public ItemCreateRequest() {
     }
 
-    public ItemCreateRequest(String name, String type, int price, String start, String end) {
+    public ItemCreateRequest(String name, String type, Integer price, String start, String end) {
         this.name = name;
         this.type = type;
         this.price = price;
@@ -26,7 +39,7 @@ public class ItemCreateRequest {
         return type;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
