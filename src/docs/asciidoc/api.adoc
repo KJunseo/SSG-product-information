@@ -87,3 +87,6 @@ include::{snippets}/ItemCreateAcceptanceTest/noSuchItemType/http-response.adoc[]
 
 ===== 가격이 음수로 들어온 경우
 include::{snippets}/ItemCreateAcceptanceTest/negativePrice/http-response.adoc[]
+
+===== 날짜 형식이 잘못된 경우
+include::{snippets}/ItemCreateAcceptanceTest/dateFormat/http-response.adoc[]

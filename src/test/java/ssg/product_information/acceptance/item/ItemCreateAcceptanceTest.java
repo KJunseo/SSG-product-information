@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
 
 import io.restassured.RestAssured;
 import io.restassured.common.mapper.TypeRef;
@@ -37,7 +36,7 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.header("Location")).isNotNull();
     }
-    
+
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("상품의 이름은 비어있을 수 없다.")
@@ -45,11 +44,11 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
         // given
         ItemCreateRequest request
                 = new ItemCreateRequest(name, "일반", 500, "2022-06-10", "2022-08-31");
-        
+
         // when
         ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(request);
         ExceptionResponse result = response.as(new TypeRef<>() {});
-        
+
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(result.getMessage()).isEqualTo("이름은 비어있을 수 없습니다.");
@@ -155,11 +154,11 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    @DisplayName("시작일이 yyyy-mm-dd 형태가 아닌 경우")
+    @DisplayName("시작일이나 마감일이 yyyy-mm-dd 형태가 아닌 경우")
     void dateFormat() {
         // given
         ItemCreateRequest request
-                = new ItemCreateRequest("새콤달콤", "일반", 500, "2022.06.10", "2022-08-31");
+                = new ItemCreateRequest("새콤달콤", "일반", 500, "2022.06.10", "2022.08.31");
 
         // when
         ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(request);
@@ -167,7 +166,7 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(result.getMessage()).isEqualTo("가격은 음수가 될 수 없습니다.");
+        assertThat(result.getMessage()).isEqualTo("날짜 형식은 yyyy-MM-dd 여야 합니다.");
     }
 
     private ExtractableResponse<Response> 새로운_상품_정보_등록_요청(ItemCreateRequest request) {
