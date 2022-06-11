@@ -33,6 +33,7 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.header("Location")).isNotNull();
     }
 
     @ParameterizedTest
@@ -81,6 +82,36 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(result.getMessage()).isEqualTo("상태는 비어있을 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 유저타입의 경우 예외가 발생한다.")
+    void noSuchUserType() {
+        // given
+        UserCreateRequest request = new UserCreateRequest("김준서", "vip", "정상");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 타입입니다.");
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 유저 상태의 경우 예외가 발생한다.")
+    void noSuchUserStat() {
+        // given
+        UserCreateRequest request = new UserCreateRequest("김준서", "일반", "대기중");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 상태입니다.");
     }
 
     private ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {
