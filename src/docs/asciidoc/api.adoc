@@ -1,0 +1,60 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:docinfo: shared-head
+
+= SSG Item Information API Docs
+
+== Common
+
+=== Exception
+
+|===
+| 상태 코드 | 설명
+
+| 400 | `잘못된 요청`
+| 500 | `서버 에러`
+|===
+
+```json
+{
+  "message": "에러 상세 내용"
+}
+```
+
+== User API
+
+=== 사용자 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 사용자 이름
+| type | String | true | 사용자의 타입(일반, 기업회원)
+| stat | String | true | 사용자의 상태(정상, 탈퇴)
+|===
+include::{snippets}/UserCreateAcceptanceTest/createUser/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/UserCreateAcceptanceTest/createUser/http-response.adoc[]
+
+===== 사용자 이름이 비어 있는 경우
+include::{snippets}/UserCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 사용자 타입이 비어 있는 경우
+include::{snippets}/UserCreateAcceptanceTest/emptyType/http-response.adoc[]
+
+===== 사용자 상태가 비어 있는 경우
+include::{snippets}/UserCreateAcceptanceTest/emptyStat/http-response.adoc[]
+
+===== 존재하지 않는 타입이 들어온 경우
+include::{snippets}/UserCreateAcceptanceTest/noSuchUserType/http-response.adoc[]
+
+===== 존재하지 않는 상태가 들어온 경우
+include::{snippets}/UserCreateAcceptanceTest/noSuchUserStat/http-response.adoc[]
+
+===== 탈퇴 상태로 가입하려는 경우
+include::{snippets}/UserCreateAcceptanceTest/createWithdrawUser/http-response.adoc[]
