@@ -1,5 +1,9 @@
 package ssg.product_information.user.domain;
 
+import java.util.Arrays;
+
+import ssg.product_information.exception.user.NoSuchUserTypeException;
+
 public enum UserType {
     GENERAL("일반"),
     ENTERPRISE("기업회원");
@@ -8,5 +12,12 @@ public enum UserType {
 
     UserType(String type) {
         this.type = type;
+    }
+
+    public static UserType getType(String type) {
+        return Arrays.stream(UserType.values())
+                     .filter(t -> t.type.equals(type))
+                     .findFirst()
+                     .orElseThrow(NoSuchUserTypeException::new);
     }
 }
