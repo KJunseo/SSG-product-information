@@ -1,4 +1,4 @@
-package ssg.product_information.unit;
+package ssg.product_information.unit.user;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
