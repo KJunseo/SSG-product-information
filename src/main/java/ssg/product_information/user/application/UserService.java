@@ -17,7 +17,7 @@ public class UserService {
 
     @Transactional
     public Long create(UserCreateRequestDto requestDto) {
-        User user = new User(requestDto.getName(), requestDto.getType(), requestDto.getStat());
+        User user = new User(requestDto.getName(), requestDto.getType());
         User savedUser = userRepository.save(user);
         return savedUser.getId();
     }

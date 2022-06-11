@@ -10,16 +10,12 @@ public class UserCreateRequest {
     @NotBlank(message = "타입은 비어있을 수 없습니다.")
     private String type;
 
-    @NotBlank(message = "상태는 비어있을 수 없습니다.")
-    private String stat;
-
     public UserCreateRequest() {
     }
 
-    public UserCreateRequest(String name, String type, String stat) {
+    public UserCreateRequest(String name, String type) {
         this.name = name;
         this.type = type;
-        this.stat = stat;
     }
 
     public String getName() {
@@ -28,9 +24,5 @@ public class UserCreateRequest {
 
     public String getType() {
         return type;
-    }
-
-    public String getStat() {
-        return stat;
     }
 }

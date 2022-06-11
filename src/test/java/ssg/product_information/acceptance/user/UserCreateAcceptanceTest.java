@@ -26,7 +26,7 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
     @DisplayName("새로운 사용자 정보를 입력하는 api 테스트")
     void createUser() {
         // given
-        UserCreateRequest request = new UserCreateRequest("김준서", "일반", "정상");
+        UserCreateRequest request = new UserCreateRequest("김준서", "일반");
 
         // when
         ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
@@ -41,7 +41,7 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
     @DisplayName("사용자의 이름은 비어 있을 수 없다.")
     void emptyName(String name) {
         // given
-        UserCreateRequest request = new UserCreateRequest(name, "일반", "정상");
+        UserCreateRequest request = new UserCreateRequest(name, "일반");
 
         // when
         ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
@@ -57,7 +57,7 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
     @DisplayName("사용자의 타입은 비어 있을 수 없다.")
     void emptyType(String type) {
         // given
-        UserCreateRequest request = new UserCreateRequest("김준서", type, "정상");
+        UserCreateRequest request = new UserCreateRequest("김준서", type);
 
         // when
         ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
@@ -68,27 +68,11 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("타입은 비어있을 수 없습니다.");
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @DisplayName("사용자의 상태는 비어 있을 수 없다.")
-    void emptyStat(String stat) {
-        // given
-        UserCreateRequest request = new UserCreateRequest("김준서", "일반", stat);
-
-        // when
-        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
-        ExceptionResponse result = response.as(new TypeRef<>() {});
-
-        // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(result.getMessage()).isEqualTo("상태는 비어있을 수 없습니다.");
-    }
-
     @Test
     @DisplayName("존재하지 않는 유저타입의 경우 예외가 발생한다.")
     void noSuchUserType() {
         // given
-        UserCreateRequest request = new UserCreateRequest("김준서", "vip", "정상");
+        UserCreateRequest request = new UserCreateRequest("김준서", "vip");
 
         // when
         ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
@@ -97,36 +81,6 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 타입입니다.");
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 유저 상태의 경우 예외가 발생한다.")
-    void noSuchUserStat() {
-        // given
-        UserCreateRequest request = new UserCreateRequest("김준서", "일반", "대기중");
-
-        // when
-        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
-        ExceptionResponse result = response.as(new TypeRef<>() {});
-
-        // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 상태입니다.");
-    }
-
-    @Test
-    @DisplayName("새로운 사용자를 등록할 때 stat이 탈퇴이면 예외를 발생한다.")
-    void createWithdrawUser() {
-        // given
-        UserCreateRequest request = new UserCreateRequest("김준서", "일반", "탈퇴");
-
-        // when
-        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
-        ExceptionResponse result = response.as(new TypeRef<>() {});
-
-        // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(result.getMessage()).isEqualTo("탈퇴 상태로 가입할 수 없습니다.");
     }
 
     private ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {

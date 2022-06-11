@@ -2,8 +2,6 @@ package ssg.product_information.user.domain;
 
 import javax.persistence.*;
 
-import ssg.product_information.exception.user.UserJoinException;
-
 @Entity(name = "users")
 public class User {
 
@@ -22,17 +20,10 @@ public class User {
     protected User() {
     }
 
-    public User(String name, UserType type, UserStat stat) {
-        validatesUserStat(stat);
+    public User(String name, UserType type) {
         this.userName = name;
         this.userType = type;
-        this.userStat = stat;
-    }
-
-    private void validatesUserStat(UserStat stat) {
-        if (UserStat.WITHDRAW.equals(stat)) {
-            throw new UserJoinException();
-        }
+        this.userStat = UserStat.NORMAL;
     }
 
     public Long getId() {
