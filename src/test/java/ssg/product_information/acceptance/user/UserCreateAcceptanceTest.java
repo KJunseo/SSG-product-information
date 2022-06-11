@@ -84,7 +84,7 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
     }
 
     private ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {
-        return RestAssured.given(super.spec)
+        return RestAssured.given(spec)
                           .log().all()
                           .contentType(APPLICATION_JSON_VALUE)
                           .body(request)

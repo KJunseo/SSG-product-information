@@ -8,7 +8,7 @@ import ssg.product_information.item.domain.Item;
 public class PromotionItem {
 
     @EmbeddedId
-    private PromotionItemId id;
+    private PromotionItemId id = new PromotionItemId();
 
     @MapsId(value = "promotionId")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -17,4 +17,20 @@ public class PromotionItem {
     @MapsId(value = "itemId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Item item;
+
+    protected PromotionItem() {
+    }
+
+    public PromotionItem(Promotion promotion, Item item) {
+        this.promotion = promotion;
+        this.item = item;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public Item getItem() {
+        return item;
+    }
 }

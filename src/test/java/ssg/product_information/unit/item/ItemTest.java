@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import ssg.product_information.exception.item.DisplayPeriodException;
+import ssg.product_information.exception.item.ItemDisplayPeriodException;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemType;
 
@@ -23,6 +23,6 @@ class ItemTest {
 
         // when & then
         assertThatThrownBy(() -> new Item("새콤달콤", ItemType.GENERAL_MEMBERSHIP, 500, start, end))
-                .isInstanceOf(DisplayPeriodException.class);
+                .isInstanceOf(ItemDisplayPeriodException.class);
     }
 }

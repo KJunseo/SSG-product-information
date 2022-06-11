@@ -4,8 +4,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class ItemCreateRequest {
 
     @NotBlank(message = "이름은 비어있을 수 없습니다.")
@@ -15,7 +13,7 @@ public class ItemCreateRequest {
     private String type;
 
     @NotNull(message = "가격은 비어있을 수 없습니다.")
-    @Min(value = 1, message = "가격은 음수가 될 수 없습니다.")
+    @Min(value = 0, message = "가격은 음수가 될 수 없습니다.")
     private Integer price;
 
     @NotBlank(message = "시작일은 비어있을 수 없습니다.")

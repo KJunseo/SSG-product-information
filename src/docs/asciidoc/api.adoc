@@ -90,3 +90,51 @@ include::{snippets}/ItemCreateAcceptanceTest/negativePrice/http-response.adoc[]
 
 ===== 날짜 형식이 잘못된 경우
 include::{snippets}/ItemCreateAcceptanceTest/dateFormat/http-response.adoc[]
+
+== Promotion API
+
+=== 프로모션 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 프로모션 이름
+| discountAmount | Integer | false | 할인 가격(discountRate와 둘 중 하나)
+| discountRate | Double | false | 할인율(discountAmount와 둘 중 하나)
+| startDate | String | true | 프로모션 시작일
+| endDate | String | true | 프로모션 마감일
+| products | array | true | 프로모션 진행할 상품 id
+|===
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-request.adoc[]
+
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountRate/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-response.adoc[]
+
+===== 이름이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 시작일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyStartDate/http-response.adoc[]
+
+===== 마감일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyEndDate/http-response.adoc[]
+
+===== 할인 가격이나 할인율이 둘 다 없거나, 둘 다 존재하는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/violateDiscountPolicy/http-response.adoc[]
+
+===== 할인 가격이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountAmount/http-response.adoc[]
+
+===== 할인율이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountRate/http-response.adoc[]
+
+===== 마감일이 시작일 이전인 경우
+include::{snippets}/PromotionCreateAcceptanceTest/wrongPeriod/http-response.adoc[]
+
+===== 상품이 하나도 포함되지 않은 경우
+include::{snippets}/PromotionCreateAcceptanceTest/noItem/http-response.adoc[]
+
+===== 프로모션 기간 동안 하루라도 전시되지 않는 상품이 프로모션에 포함된 경우
+include::{snippets}/PromotionCreateAcceptanceTest/invalidPeriodItemInPromotion/http-response.adoc[]
