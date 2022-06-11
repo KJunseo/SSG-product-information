@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("유저 상태 단위 테스트")
-public class UserStatTest {
+class UserStatTest {
 
     @Test
     @DisplayName("문자열에 맞게 UserStat 인스턴스를 반환한다")
