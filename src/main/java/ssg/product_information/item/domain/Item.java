@@ -52,4 +52,32 @@ public class Item {
             throw new DisplayPeriodException();
         }
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public Integer getItemPrice() {
+        return itemPrice;
+    }
+
+    public LocalDate getItemDisplayStartDate() {
+        return itemDisplayStartDate;
+    }
+
+    public LocalDate getItemDisplayEndDate() {
+        return itemDisplayEndDate;
+    }
+
+    public List<PromotionItem> getPromotionItems() {
+        return promotionItems;
+    }
 }

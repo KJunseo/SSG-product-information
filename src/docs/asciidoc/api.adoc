@@ -48,3 +48,21 @@ include::{snippets}/UserCreateAcceptanceTest/emptyType/http-response.adoc[]
 
 ===== 존재하지 않는 타입이 들어온 경우
 include::{snippets}/UserCreateAcceptanceTest/noSuchUserType/http-response.adoc[]
+
+== Item API
+
+=== 상품 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 상품 이름
+| type | String | true | 상품 타입(일반, 기업회원상품)
+| price | Integer | true | 상품 가격
+| start | String | true | 상품 전시 시작일
+| end | String | true | 상품 전시 마감일
+|===
+include::{snippets}/ItemCreateAcceptanceTest/createItem/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/ItemCreateAcceptanceTest/createItem/http-response.adoc[]
