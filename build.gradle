@@ -23,6 +23,7 @@ dependencies {
     implementation 'com.h2database:h2'
 
     implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'

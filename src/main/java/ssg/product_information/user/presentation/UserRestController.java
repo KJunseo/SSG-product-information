@@ -2,6 +2,8 @@ package ssg.product_information.user.presentation;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +25,7 @@ public class UserRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<Void> create(@RequestBody @Valid UserCreateRequest request) {
         UserCreateRequestDto requestDto = UserAssembler.userCreateRequestDto(request);
         Long id = userService.create(requestDto);
         URI location = URI.create("/users/" + id);
