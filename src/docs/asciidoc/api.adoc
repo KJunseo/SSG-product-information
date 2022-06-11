@@ -81,3 +81,9 @@ include::{snippets}/ItemCreateAcceptanceTest/emptyStart/http-response.adoc[]
 
 ===== 마감일이 비어 있는 경우
 include::{snippets}/ItemCreateAcceptanceTest/emptyEnd/http-response.adoc[]
+
+===== 존재하지 않는 상품 타입인 경우
+include::{snippets}/ItemCreateAcceptanceTest/noSuchItemType/http-response.adoc[]
+
+===== 가격이 음수로 들어온 경우
+include::{snippets}/ItemCreateAcceptanceTest/negativePrice/http-response.adoc[]

@@ -122,6 +122,54 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("마감일은 비어있을 수 없습니다.");
     }
 
+    @Test
+    @DisplayName("존재하지 않는 상품타입인 경우 예외가 발생한다.")
+    void noSuchItemType() {
+        // given
+        ItemCreateRequest request
+                = new ItemCreateRequest("새콤달콤", "vip 멤버십", 500, "2022-06-10", "2022-08-31");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("존재하지 않는 상품 타입입니다.");
+    }
+
+    @Test
+    @DisplayName("가격이 음수인 경우")
+    void negativePrice() {
+        // given
+        ItemCreateRequest request
+                = new ItemCreateRequest("새콤달콤", "일반", -1, "2022-06-10", "2022-08-31");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("가격은 음수가 될 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("시작일이 yyyy-mm-dd 형태가 아닌 경우")
+    void dateFormat() {
+        // given
+        ItemCreateRequest request
+                = new ItemCreateRequest("새콤달콤", "일반", 500, "2022.06.10", "2022-08-31");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("가격은 음수가 될 수 없습니다.");
+    }
+
     private ExtractableResponse<Response> 새로운_상품_정보_등록_요청(ItemCreateRequest request) {
         return RestAssured.given(super.spec)
                           .log().all()
