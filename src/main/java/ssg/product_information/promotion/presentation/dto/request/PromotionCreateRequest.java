@@ -1,6 +1,7 @@
 package ssg.product_information.promotion.presentation.dto.request;
 
 import java.util.List;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class PromotionCreateRequest {
@@ -8,8 +9,10 @@ public class PromotionCreateRequest {
     @NotBlank(message = "이름은 비어있을 수 없습니다.")
     private String name;
 
+    @Min(value = 0, message = "할인 가격은 음수가 될 수 없습니다.")
     private Integer discountAmount;
 
+    @Min(value = 0, message = "할인율은 음수가 될 수 없습니다.")
     private Double discountRate;
 
     @NotBlank(message = "시작일은 비어있을 수 없습니다.")

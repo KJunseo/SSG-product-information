@@ -123,3 +123,9 @@ include::{snippets}/PromotionCreateAcceptanceTest/emptyEndDate/http-response.ado
 
 ===== 할인 가격이나 할인율이 둘 다 없거나, 둘 다 존재하는 경우
 include::{snippets}/PromotionCreateAcceptanceTest/violateDiscountPolicy/http-response.adoc[]
+
+===== 할인 가격이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountAmount/http-response.adoc[]
+
+===== 할인율이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountRate/http-response.adoc[]
