@@ -16,7 +16,8 @@ public class Item {
 
     private String itemName;
 
-    private String itemType;
+    @Enumerated(EnumType.STRING)
+    private ItemType itemType;
 
     private Integer itemPrice;
 
