@@ -1,5 +1,7 @@
 package ssg.product_information.item.application;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,5 +22,10 @@ public class ItemService {
         Item item = new Item(request.getName(), request.getType(), request.getPrice(), request.getStart(), request.getEnd());
         Item savedItem = itemRepository.save(item);
         return savedItem.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Item> findItemsByIds(List<Long> products) {
+        return itemRepository.findAllById(products);
     }
 }

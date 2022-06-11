@@ -32,12 +32,12 @@ public class AcceptanceTest {
     @Autowired
     private DatabaseCleaner cleaner;
 
-    protected RequestSpecification spec;
+    protected static RequestSpecification spec;
 
     @BeforeEach
     void init(RestDocumentationContextProvider restDocumentation) {
         RestAssured.port = port;
-        this.spec = new RequestSpecBuilder()
+        spec = new RequestSpecBuilder()
                 .addFilter(documentationConfiguration(restDocumentation)
                         .operationPreprocessors()
                         .withRequestDefaults(prettyPrint())

@@ -90,3 +90,20 @@ include::{snippets}/ItemCreateAcceptanceTest/negativePrice/http-response.adoc[]
 
 ===== 날짜 형식이 잘못된 경우
 include::{snippets}/ItemCreateAcceptanceTest/dateFormat/http-response.adoc[]
+
+== Promotion API
+
+=== 프로모션 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 프로모션 이름
+| discountAmount | Integer | false | 할인 가격(discountRate와 둘 중 하나)
+| discountRate | Double | false | 할인율(discountAmount와 둘 중 하나)
+| startDate | String | true | 프로모션 시작일
+| endDate | String | true | 프로모션 마감일
+| products | array | true | 프로모션 진행할 상품 id
+|===
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-request.adoc[]
+
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountRate/http-request.adoc[]
