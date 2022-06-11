@@ -16,4 +16,29 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserStat userStat;
+
+    protected User() {
+    }
+
+    public User(String name, UserType type) {
+        this.userName = name;
+        this.userType = type;
+        this.userStat = UserStat.NORMAL;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public UserStat getUserStat() {
+        return userStat;
+    }
 }
