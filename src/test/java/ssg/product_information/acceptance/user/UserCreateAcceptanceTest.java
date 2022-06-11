@@ -114,6 +114,21 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 상태입니다.");
     }
 
+    @Test
+    @DisplayName("새로운 사용자를 등록할 때 stat이 탈퇴이면 예외를 발생한다.")
+    void createWithdrawUser() {
+        // given
+        UserCreateRequest request = new UserCreateRequest("김준서", "일반", "탈퇴");
+
+        // when
+        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("탈퇴 상태로 가입할 수 없습니다.");
+    }
+
     private ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {
         return RestAssured.given(super.spec)
                           .log().all()
