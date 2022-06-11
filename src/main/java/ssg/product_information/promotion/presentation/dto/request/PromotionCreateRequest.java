@@ -1,13 +1,23 @@
 package ssg.product_information.promotion.presentation.dto.request;
 
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 public class PromotionCreateRequest {
+
+    @NotBlank(message = "이름은 비어있을 수 없습니다.")
     private String name;
+
     private Integer discountAmount;
+
     private Double discountRate;
+
+    @NotBlank(message = "시작일은 비어있을 수 없습니다.")
     private String startDate;
+
+    @NotBlank(message = "마감일은 비어있을 수 없습니다.")
     private String endDate;
+
     private List<Long> products;
 
     public PromotionCreateRequest() {

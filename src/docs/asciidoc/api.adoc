@@ -107,3 +107,19 @@ include::{snippets}/ItemCreateAcceptanceTest/dateFormat/http-response.adoc[]
 include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-request.adoc[]
 
 include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountRate/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-response.adoc[]
+
+===== 이름이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 시작일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyStartDate/http-response.adoc[]
+
+===== 마감일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyEndDate/http-response.adoc[]
+
+===== 할인 가격이나 할인율이 둘 다 없거나, 둘 다 존재하는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/violateDiscountPolicy/http-response.adoc[]

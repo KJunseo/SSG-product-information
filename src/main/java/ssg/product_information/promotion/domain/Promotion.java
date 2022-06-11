@@ -70,6 +70,9 @@ public class Promotion {
         if (!Objects.isNull(discountAmount) && !Objects.isNull(discountRate)) {
             throw new ViolateDiscountPolicyException();
         }
+        if (Objects.isNull(discountAmount) && Objects.isNull(discountRate)) {
+            throw new ViolateDiscountPolicyException();
+        }
     }
 
     private void validatesDisplayPeriod(LocalDate startDate, LocalDate endDate) {

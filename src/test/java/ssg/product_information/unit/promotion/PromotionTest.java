@@ -57,6 +57,18 @@ class PromotionTest {
     }
 
     @Test
+    @DisplayName("할인 가격과 할인율이 둘 다 존재하지 않으면 예외가 발생한다.")
+    void violateDiscountPolicyNotExist() {
+        // given
+        LocalDate start = LocalDate.of(2022, 6, 15);
+        LocalDate end = LocalDate.of(2022, 7, 15);
+
+        // when & then
+        assertThatThrownBy(() -> new Promotion("쓱데이", null, null, start, end))
+                .isInstanceOf(ViolateDiscountPolicyException.class);
+    }
+
+    @Test
     @DisplayName("프로모션 시작일이 프로모션 마감일 이전이라면 예외가 발생한다.")
     void wrongPeriod() {
         // given

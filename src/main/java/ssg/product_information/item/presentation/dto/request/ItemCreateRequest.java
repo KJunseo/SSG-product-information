@@ -4,8 +4,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class ItemCreateRequest {
 
     @NotBlank(message = "이름은 비어있을 수 없습니다.")
