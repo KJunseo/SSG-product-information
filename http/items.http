@@ -1,0 +1,23 @@
+### 상품 생성(/items)
+POST {{host}}/items
+Content-Type: application/json
+
+{
+  "name": "새콤달콤",
+  "type": "일반",
+  "price": 500,
+  "start": "2022-06-10",
+  "end": "2022-06-20"
+}
+
+
+### 상품 삭제(/items/{itemId})
+DELETE {{host}}/items/1
+
+
+### 사용자가 구매할 수 있는 상품 정보 반환(/items/purchase?userId={userId})
+GET {{host}}/items/purchase?userId=1
+
+
+###  상품에 존재하는 프로모션 정보 반환(/items/{itemId}/promotions)
+GET {{host}}/items/1/promotions
