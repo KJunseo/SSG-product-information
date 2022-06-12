@@ -1,0 +1,227 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:docinfo: shared-head
+
+= SSG Item Information API Docs
+
+== Common
+
+=== Exception
+
+|===
+| 상태 코드 | 설명
+
+| 400 | `잘못된 요청`
+| 500 | `서버 에러`
+|===
+
+```json
+{
+  "message": "에러 상세 내용"
+}
+```
+
+== User API
+
+=== 사용자 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 사용자 이름
+| type | String | true | 사용자의 타입(일반, 기업회원)
+|===
+include::{snippets}/UserCreateAcceptanceTest/createUser/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/UserCreateAcceptanceTest/createUser/http-response.adoc[]
+
+===== 사용자 이름이 비어 있는 경우
+include::{snippets}/UserCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 사용자 타입이 비어 있는 경우
+include::{snippets}/UserCreateAcceptanceTest/emptyType/http-response.adoc[]
+
+===== 존재하지 않는 타입이 들어온 경우
+include::{snippets}/UserCreateAcceptanceTest/noSuchUserType/http-response.adoc[]
+
+=== 사용자 삭제
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 사용자 Id
+|===
+include::{snippets}/UserDeleteAcceptanceTest/withdrawal/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/UserDeleteAcceptanceTest/withdrawal/http-response.adoc[]
+
+===== 존재하지 않는 사용자인 경우
+include::{snippets}/UserDeleteAcceptanceTest/notExist/http-response.adoc[]
+
+===== 이미 탈퇴한 사용자인 경우
+include::{snippets}/UserDeleteAcceptanceTest/alreadyWithdrawal/http-response.adoc[]
+
+== Item API
+
+=== 상품 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 상품 이름
+| type | String | true | 상품 타입(일반, 기업회원상품)
+| price | Integer | true | 상품 가격
+| start | String | true | 상품 전시 시작일
+| end | String | true | 상품 전시 마감일
+|===
+include::{snippets}/ItemCreateAcceptanceTest/createItem/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/ItemCreateAcceptanceTest/createItem/http-response.adoc[]
+
+===== 이름이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 타입이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptytype/http-response.adoc[]
+
+===== 가격이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyPrice/http-response.adoc[]
+
+===== 시작일이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyStart/http-response.adoc[]
+
+===== 마감일이 비어 있는 경우
+include::{snippets}/ItemCreateAcceptanceTest/emptyEnd/http-response.adoc[]
+
+===== 존재하지 않는 상품 타입인 경우
+include::{snippets}/ItemCreateAcceptanceTest/noSuchItemType/http-response.adoc[]
+
+===== 가격이 음수로 들어온 경우
+include::{snippets}/ItemCreateAcceptanceTest/negativePrice/http-response.adoc[]
+
+===== 날짜 형식이 잘못된 경우
+include::{snippets}/ItemCreateAcceptanceTest/dateFormat/http-response.adoc[]
+
+=== 상품 삭제
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 상품 Id
+|===
+include::{snippets}/ItemDeleteAcceptanceTest/delete/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/ItemDeleteAcceptanceTest/delete/http-response.adoc[]
+
+===== 존재하지 않는 상품을 삭제하는 경우
+include::{snippets}/ItemDeleteAcceptanceTest/notExist/http-response.adoc[]
+
+===== 프로모션 중인 상품을 삭제하는 경우
+include::{snippets}/ItemDeleteAcceptanceTest/promotionItem/http-response.adoc[]
+
+=== 사용자가 구매할 수 있는 상품 정보 반환
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 유저 Id
+|===
+include::{snippets}/ItemReadAcceptanceTest/itemsByGeneralUser/http-request.adoc[]
+
+==== Response
+===== 성공 - 일반 유저
+include::{snippets}/ItemReadAcceptanceTest/itemsByGeneralUser/http-response.adoc[]
+
+===== 성공 - 기업 회원
+include::{snippets}/ItemReadAcceptanceTest/itemsByEnterpriseUser/http-response.adoc[]
+
+===== 탈퇴한 회원이 조회하는 경우
+include::{snippets}/ItemReadAcceptanceTest/withdrawalUser/http-response.adoc[]
+
+=== 상품에 포함된 프로모션 정보를 반환
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 상품 Id
+|===
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountAmount/http-request.adoc[]
+
+==== Response
+===== 성공 - 정액
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountAmount/http-response.adoc[]
+
+===== 성공 - 정률
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountRate/http-response.adoc[]
+
+===== 프로모션 적용 가격이 0이거나 프로모션이 없는 경우
+include::{snippets}/ItemReadAcceptanceTest/noPromotionItem/http-response.adoc[]
+
+== Promotion API
+
+=== 프로모션 생성
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| name | String | true | 프로모션 이름
+| discountAmount | Integer | false | 할인 가격(discountRate와 둘 중 하나)
+| discountRate | Double | false | 할인율(discountAmount와 둘 중 하나)
+| startDate | String | true | 프로모션 시작일
+| endDate | String | true | 프로모션 마감일
+| products | array | true | 프로모션 진행할 상품 id
+|===
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-request.adoc[]
+
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountRate/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/PromotionCreateAcceptanceTest/createPromotionDiscountAmount/http-response.adoc[]
+
+===== 이름이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyName/http-response.adoc[]
+
+===== 시작일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyStartDate/http-response.adoc[]
+
+===== 마감일이 비어있는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/emptyEndDate/http-response.adoc[]
+
+===== 할인 가격이나 할인율이 둘 다 없거나, 둘 다 존재하는 경우
+include::{snippets}/PromotionCreateAcceptanceTest/violateDiscountPolicy/http-response.adoc[]
+
+===== 할인 가격이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountAmount/http-response.adoc[]
+
+===== 할인율이 음수로 들어온 경우
+include::{snippets}/PromotionCreateAcceptanceTest/negativeDiscountRate/http-response.adoc[]
+
+===== 마감일이 시작일 이전인 경우
+include::{snippets}/PromotionCreateAcceptanceTest/wrongPeriod/http-response.adoc[]
+
+===== 상품이 하나도 포함되지 않은 경우
+include::{snippets}/PromotionCreateAcceptanceTest/noItem/http-response.adoc[]
+
+===== 프로모션 기간 동안 하루라도 전시되지 않는 상품이 프로모션에 포함된 경우
+include::{snippets}/PromotionCreateAcceptanceTest/invalidPeriodItemInPromotion/http-response.adoc[]
+
+=== 프로모션 삭제
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 프로모션 Id
+|===
+include::{snippets}/PromotionDeleteAcceptanceTest/delete/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/PromotionDeleteAcceptanceTest/delete/http-response.adoc[]
+
+===== 존재하지 않는 프로모션을 삭제하는 경우
+include::{snippets}/PromotionDeleteAcceptanceTest/noExist/http-response.adoc[]
