@@ -1,6 +1,7 @@
 package ssg.product_information.promotion.application.dto;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import ssg.product_information.promotion.application.dto.request.PromotionCreateRequestDto;
 import ssg.product_information.promotion.application.dto.response.PromotionResponseDto;
@@ -29,6 +30,9 @@ public class PromotionAssembler {
     }
 
     public static PromotionResponseDto promotionResponseDto(Promotion promotion) {
+        if (Objects.isNull(promotion)) {
+            return new PromotionResponseDto();
+        }
         return new PromotionResponseDto(
                 promotion.getId(),
                 promotion.getPromotionName(),

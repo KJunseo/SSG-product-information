@@ -90,10 +90,14 @@ public class Item {
 
     public void discount(DiscountPolicy discountPolicy, Promotion promotion) {
         int discountPrice = discountPolicy.apply(promotion, this.itemPrice);
-        if (Objects.isNull(this.discountPrice) || (discountPrice < this.discountPrice)) {
+        if (isMinPrice(discountPrice) && discountPrice > 0) {
             this.discountPrice = discountPrice;
             this.promotion = promotion;
         }
+    }
+
+    private boolean isMinPrice(int discountPrice) {
+        return Objects.isNull(this.discountPrice) || (discountPrice < this.discountPrice);
     }
 
     public Long getId() {

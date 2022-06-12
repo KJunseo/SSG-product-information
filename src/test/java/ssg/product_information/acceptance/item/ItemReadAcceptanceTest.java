@@ -173,6 +173,60 @@ public class ItemReadAcceptanceTest extends AcceptanceTest {
         assertThat(result.getPromotion().getId()).isEqualTo(promotionId);
     }
 
+    @Test
+    @DisplayName("프로모션이 여러개인 경우 가격이 낮은 프로모션 정보를 반환한다.")
+    void minPricePromotion() {
+        // given
+        LocalDate now = LocalDate.now();
+
+        ItemCreateRequest item
+                = new ItemCreateRequest("게토레이", "일반", 2000, stringDate(now.minusMonths(3)), stringDate(now.plusMonths(3)));
+        Long itemId = itemCreate(item);
+
+        PromotionCreateRequest request1
+                = new PromotionCreateRequest("2022 쓱데이", 1000, stringDate(now.minusMonths(1)), stringDate(now.plusMonths(1)), List.of(itemId));
+        PromotionCreateRequest request2
+                = new PromotionCreateRequest("2021 쓱데이", 0.05, stringDate(now.minusMonths(1)), stringDate(now.plusMonths(1)), List.of(itemId));
+
+        Long promotionId = promotionCreate(request1);
+        promotionCreate(request2);
+
+        // when
+        ExtractableResponse<Response> response = 상품에_존재하는_프로모션_정보_요청(itemId);
+        ItemPromotionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(result.getId()).isEqualTo(itemId);
+        assertThat(result.getPromotion().getId()).isEqualTo(promotionId);
+    }
+
+    @Test
+    @DisplayName("프로모션 적용 가격이 0 이하일시 프로모션 적용이 안된다.")
+    void priceUnderZero() {
+        // given
+        LocalDate now = LocalDate.now();
+
+        ItemCreateRequest item
+                = new ItemCreateRequest("게토레이", "일반", 2000, stringDate(now.minusMonths(3)), stringDate(now.plusMonths(3)));
+        Long itemId = itemCreate(item);
+
+        PromotionCreateRequest request
+                = new PromotionCreateRequest("쓱데이", 2000, stringDate(now.minusMonths(1)), stringDate(now.plusMonths(1)), List.of(itemId));
+
+        promotionCreate(request);
+
+        // when
+        ExtractableResponse<Response> response = 상품에_존재하는_프로모션_정보_요청(itemId);
+        ItemPromotionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(result.getId()).isEqualTo(itemId);
+        assertThat(result.getDiscountPrice()).isNull();
+        assertThat(result.getPromotion().getId()).isNull();
+    }
+
     private String stringDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return date.format(formatter);

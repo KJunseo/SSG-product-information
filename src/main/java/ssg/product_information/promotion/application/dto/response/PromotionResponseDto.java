@@ -10,6 +10,9 @@ public class PromotionResponseDto {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    public PromotionResponseDto() {
+    }
+
     public PromotionResponseDto(
             Long id,
             String name,
