@@ -3,7 +3,7 @@ package ssg.product_information.unit.user;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import ssg.product_information.exception.user.AlreadyWithdrawalException;
+import ssg.product_information.exception.user.NoSuchUserException;
 import ssg.product_information.user.domain.User;
 import ssg.product_information.user.domain.UserStat;
 import ssg.product_information.user.domain.UserType;
@@ -35,6 +35,6 @@ public class UserTest {
 
         // when & then
         assertThatThrownBy(user::withdrawal)
-                .isInstanceOf(AlreadyWithdrawalException.class);
+                .isInstanceOf(NoSuchUserException.class);
     }
 }

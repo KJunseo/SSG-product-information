@@ -2,7 +2,7 @@ package ssg.product_information.user.domain;
 
 import javax.persistence.*;
 
-import ssg.product_information.exception.user.AlreadyWithdrawalException;
+import ssg.product_information.exception.user.NoSuchUserException;
 
 @Entity(name = "users")
 public class User {
@@ -34,7 +34,7 @@ public class User {
 
     public void withdrawal() {
         if (UserStat.WITHDRAWAL.equals(this.userStat)) {
-            throw new AlreadyWithdrawalException();
+            throw new NoSuchUserException();
         }
         this.userStat = UserStat.WITHDRAWAL;
     }

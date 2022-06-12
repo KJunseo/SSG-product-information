@@ -83,7 +83,13 @@ public class UserCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저 타입입니다.");
     }
 
-    private ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {
+    public static Long userCreate(UserCreateRequest request) {
+        ExtractableResponse<Response> response = 새로운_사용자_정보_등록_요청(request);
+        String location = response.header("Location");
+        return Long.parseLong(location.substring(location.length() - 1));
+    }
+
+    private static ExtractableResponse<Response> 새로운_사용자_정보_등록_요청(UserCreateRequest request) {
         return RestAssured.given(spec)
                           .log().all()
                           .contentType(APPLICATION_JSON_VALUE)

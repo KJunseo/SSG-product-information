@@ -4,10 +4,7 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ssg.product_information.user.application.UserService;
 import ssg.product_information.user.application.dto.request.UserCreateRequestDto;
@@ -31,4 +28,9 @@ public class UserRestController {
         return ResponseEntity.created(location).build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.withdrawal(id);
+        return ResponseEntity.ok().build();
+    }
 }
