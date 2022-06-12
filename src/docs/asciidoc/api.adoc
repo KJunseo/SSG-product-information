@@ -160,6 +160,9 @@ include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountAmount/http-re
 ===== 성공 - 정률
 include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountRate/http-response.adoc[]
 
+===== 프로모션 적용 가격이 0이거나 프로모션이 없는 경우
+include::{snippets}/ItemReadAcceptanceTest/noPromotionItem/http-response.adoc[]
+
 == Promotion API
 
 === 프로모션 생성

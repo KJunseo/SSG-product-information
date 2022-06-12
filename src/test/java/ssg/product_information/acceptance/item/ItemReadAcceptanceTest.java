@@ -227,6 +227,27 @@ public class ItemReadAcceptanceTest extends AcceptanceTest {
         assertThat(result.getPromotion().getId()).isNull();
     }
 
+    @Test
+    @DisplayName("상품에 프로모션이 없는 경우")
+    void noPromotionItem() {
+        // given
+        LocalDate now = LocalDate.now();
+
+        ItemCreateRequest item
+                = new ItemCreateRequest("게토레이", "일반", 2000, stringDate(now.minusMonths(3)), stringDate(now.plusMonths(3)));
+        Long itemId = itemCreate(item);
+
+        // when
+        ExtractableResponse<Response> response = 상품에_존재하는_프로모션_정보_요청(itemId);
+        ItemPromotionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(result.getId()).isEqualTo(itemId);
+        assertThat(result.getDiscountPrice()).isNull();
+        assertThat(result.getPromotion().getId()).isNull();
+    }
+
     private String stringDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return date.format(formatter);
