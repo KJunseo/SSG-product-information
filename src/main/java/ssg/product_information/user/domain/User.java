@@ -3,6 +3,8 @@ package ssg.product_information.user.domain;
 import javax.persistence.*;
 
 import ssg.product_information.exception.user.NoSuchUserException;
+import ssg.product_information.user.domain.converter.UserStatConverter;
+import ssg.product_information.user.domain.converter.UserTypeConverter;
 
 @Entity(name = "users")
 public class User {
@@ -13,10 +15,10 @@ public class User {
 
     private String userName;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = UserTypeConverter.class)
     private UserType userType;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = UserStatConverter.class)
     private UserStat userStat;
 
     protected User() {

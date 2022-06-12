@@ -23,7 +23,7 @@ public class Item {
 
     private String itemName;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = ItemTypeConverter.class)
     private ItemType itemType;
 
     private Integer itemPrice;
