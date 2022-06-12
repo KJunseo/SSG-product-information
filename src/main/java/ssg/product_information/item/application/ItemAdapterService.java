@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ssg.product_information.exception.user.NoSuchUserTypeException;
 import ssg.product_information.item.application.adapter.ItemAdapter;
 import ssg.product_information.user.domain.User;
 
@@ -19,6 +20,6 @@ public class ItemAdapterService {
         return itemAdapters.stream()
                            .filter(itemAdapter -> itemAdapter.supports(user))
                            .findFirst()
-                           .orElseThrow();
+                           .orElseThrow(NoSuchUserTypeException::new);
     }
 }
