@@ -9,4 +9,8 @@ public enum UserStat {
     UserStat(String stat) {
         this.stat = stat;
     }
+
+    public String getStat() {
+        return stat;
+    }
 }

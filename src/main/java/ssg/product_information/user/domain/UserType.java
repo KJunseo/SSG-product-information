@@ -20,4 +20,8 @@ public enum UserType {
                      .findFirst()
                      .orElseThrow(NoSuchUserTypeException::new);
     }
+
+    public String getType() {
+        return type;
+    }
 }
