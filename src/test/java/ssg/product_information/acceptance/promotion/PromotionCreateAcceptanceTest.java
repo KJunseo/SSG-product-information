@@ -22,7 +22,7 @@ import ssg.product_information.promotion.presentation.dto.request.PromotionCreat
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static ssg.product_information.acceptance.item.ItemCreateAcceptanceTest.새로운_상품_정보_등록_요청;
+import static ssg.product_information.acceptance.item.ItemCreateAcceptanceTest.itemCreate;
 
 @DisplayName("프로모션 생성 인수테스트")
 public class PromotionCreateAcceptanceTest extends AcceptanceTest {
@@ -262,12 +262,6 @@ public class PromotionCreateAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(result.getMessage()).isEqualTo("프로모션에 포함된 상품의 전시 기간이 올바르지 않습니다.");
-    }
-
-    private Long itemCreate(ItemCreateRequest item) {
-        ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(item);
-        String location = response.header("Location");
-        return Long.parseLong(location.substring(location.length() - 1));
     }
 
     private ExtractableResponse<Response> 새로운_프로모션_정보_등록_요청(PromotionCreateRequest request) {

@@ -4,10 +4,7 @@ import java.net.URI;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ssg.product_information.item.application.ItemService;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
@@ -29,5 +26,11 @@ public class ItemRestController {
         Long id = itemService.create(requestDto);
         URI location = URI.create("/items/" + id);
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        itemService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

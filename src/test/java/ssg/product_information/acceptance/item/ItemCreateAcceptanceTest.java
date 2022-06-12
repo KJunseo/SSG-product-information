@@ -169,6 +169,12 @@ public class ItemCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("날짜 형식은 yyyy-MM-dd 여야 합니다.");
     }
 
+    public static Long itemCreate(ItemCreateRequest item) {
+        ExtractableResponse<Response> response = 새로운_상품_정보_등록_요청(item);
+        String location = response.header("Location");
+        return Long.parseLong(location.substring(location.length() - 1));
+    }
+
     public static ExtractableResponse<Response> 새로운_상품_정보_등록_요청(ItemCreateRequest request) {
         return RestAssured.given(spec)
                           .log().all()
