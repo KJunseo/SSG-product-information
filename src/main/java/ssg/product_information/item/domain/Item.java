@@ -67,6 +67,11 @@ public class Item {
         }
     }
 
+    public boolean isDisplay() {
+        LocalDate now = LocalDate.now();
+        return !(now.isBefore(this.itemDisplayStartDate) || now.isAfter(this.itemDisplayEndDate));
+    }
+
     public Long getId() {
         return id;
     }

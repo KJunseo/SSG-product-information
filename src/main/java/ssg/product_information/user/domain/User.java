@@ -47,6 +47,10 @@ public class User {
         return UserType.GENERAL.equals(this.userType);
     }
 
+    public boolean isEnterprise() {
+        return UserType.ENTERPRISE.equals(this.userType);
+    }
+
     public Long getId() {
         return id;
     }

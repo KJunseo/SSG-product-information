@@ -1,16 +1,17 @@
 package ssg.product_information.item.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ssg.product_information.exception.item.NoSuchItemException;
+import ssg.product_information.item.application.adapter.ItemAdapter;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
 import ssg.product_information.item.application.dto.response.ItemResponseDto;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemRepository;
-import ssg.product_information.item.domain.ItemType;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
 import ssg.product_information.user.application.UserService;
 import ssg.product_information.user.domain.User;
@@ -19,10 +20,12 @@ import ssg.product_information.user.domain.User;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final UserService userService;
+    private final ItemAdapterService itemAdapterService;
 
-    public ItemService(ItemRepository itemRepository, UserService userService) {
+    public ItemService(ItemRepository itemRepository, UserService userService, ItemAdapterService itemAdapterService) {
         this.itemRepository = itemRepository;
         this.userService = userService;
+        this.itemAdapterService = itemAdapterService;
     }
 
     @Transactional
@@ -55,11 +58,12 @@ public class ItemService {
         User user = userService.findById(id);
         user.checkWithdrawal();
 
-        if (user.isGeneralUser()) {
-            List<Item> result = itemRepository.findAllByItemType(ItemType.GENERAL_MEMBERSHIP);
-            return ItemAssembler.itemResponseDtos(result);
-        }
+        ItemAdapter itemAdapter = itemAdapterService.itemAdapterByUser(user);
+        List<Item> items = itemAdapter.findItems()
+                                      .stream()
+                                      .filter(Item::isDisplay)
+                                      .collect(Collectors.toList());
 
-        return ItemAssembler.itemResponseDtos(itemRepository.findAll());
+        return ItemAssembler.itemResponseDtos(items);
     }
 }
