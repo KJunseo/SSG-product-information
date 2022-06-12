@@ -29,7 +29,7 @@ public class Promotion {
 
     private LocalDate promotionEndDate;
 
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<PromotionItem> promotionItems = new ArrayList<>();
 
     protected Promotion() {
