@@ -67,7 +67,7 @@ public class UserDeleteAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저입니다.");
     }
 
-    private ExtractableResponse<Response> 사용자_탈퇴_요청(Long id) {
+    public static ExtractableResponse<Response> 사용자_탈퇴_요청(Long id) {
         return RestAssured.given(spec)
                           .log().all()
                           .contentType(APPLICATION_JSON_VALUE)

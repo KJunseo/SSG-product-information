@@ -127,6 +127,24 @@ include::{snippets}/ItemDeleteAcceptanceTest/notExist/http-response.adoc[]
 ===== 프로모션 중인 상품을 삭제하는 경우
 include::{snippets}/ItemDeleteAcceptanceTest/promotionItem/http-response.adoc[]
 
+=== 사용자가 구매할 수 있는 상품 정보 반환
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 유저 Id
+|===
+include::{snippets}/ItemReadAcceptanceTest/itemsByGeneralUser/http-request.adoc[]
+
+==== Response
+===== 성공 - 일반 유저
+include::{snippets}/ItemReadAcceptanceTest/itemsByGeneralUser/http-response.adoc[]
+
+===== 성공 - 기업 회원
+include::{snippets}/ItemReadAcceptanceTest/itemsByEnterpriseUser/http-response.adoc[]
+
+===== 탈퇴한 회원이 조회하는 경우
+include::{snippets}/ItemReadAcceptanceTest/withdrawalUser/http-response.adoc[]
+
 == Promotion API
 
 === 프로모션 생성

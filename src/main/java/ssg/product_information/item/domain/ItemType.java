@@ -20,4 +20,8 @@ public enum ItemType {
                      .findFirst()
                      .orElseThrow(NoSuchItemTypeException::new);
     }
+
+    public String getType() {
+        return type;
+    }
 }

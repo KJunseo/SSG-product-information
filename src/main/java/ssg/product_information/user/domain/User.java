@@ -33,10 +33,22 @@ public class User {
     }
 
     public void withdrawal() {
+        checkWithdrawal();
+        this.userStat = UserStat.WITHDRAWAL;
+    }
+
+    public void checkWithdrawal() {
         if (UserStat.WITHDRAWAL.equals(this.userStat)) {
             throw new NoSuchUserException();
         }
-        this.userStat = UserStat.WITHDRAWAL;
+    }
+
+    public boolean isGeneralUser() {
+        return UserType.GENERAL.equals(this.userType);
+    }
+
+    public boolean isEnterprise() {
+        return UserType.ENTERPRISE.equals(this.userType);
     }
 
     public Long getId() {

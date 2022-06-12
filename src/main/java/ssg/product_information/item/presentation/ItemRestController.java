@@ -1,6 +1,7 @@
 package ssg.product_information.item.presentation;
 
 import java.net.URI;
+import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import ssg.product_information.item.application.ItemService;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
+import ssg.product_information.item.application.dto.response.ItemResponseDto;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
 import ssg.product_information.item.presentation.dto.request.ItemCreateRequest;
+import ssg.product_information.item.presentation.dto.response.ItemResponse;
 
 @RequestMapping("/items")
 @RestController
@@ -32,5 +35,12 @@ public class ItemRestController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         itemService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/purchase")
+    public ResponseEntity<List<ItemResponse>> itemsByUser(@RequestParam("userId") Long id) {
+        List<ItemResponseDto> responseDto = itemService.findItemsByUserId(id);
+        List<ItemResponse> result = ItemAssembler.itemResponses(responseDto);
+        return ResponseEntity.ok(result);
     }
 }
