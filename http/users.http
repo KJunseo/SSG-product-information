@@ -1,0 +1,13 @@
+### 사용자 생성(/users)
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "name": "김준서",
+  "type": "일반"
+}
+
+
+### 사용자 탈퇴(/users/{userId})
+DELETE {{host}}/users/1
+
