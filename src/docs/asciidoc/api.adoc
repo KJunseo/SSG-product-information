@@ -145,6 +145,21 @@ include::{snippets}/ItemReadAcceptanceTest/itemsByEnterpriseUser/http-response.a
 ===== 탈퇴한 회원이 조회하는 경우
 include::{snippets}/ItemReadAcceptanceTest/withdrawalUser/http-response.adoc[]
 
+=== 상품에 포함된 프로모션 정보를 반환
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 상품 Id
+|===
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountAmount/http-request.adoc[]
+
+==== Response
+===== 성공 - 정액
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountAmount/http-response.adoc[]
+
+===== 성공 - 정률
+include::{snippets}/ItemReadAcceptanceTest/promotionOfItemDiscountRate/http-response.adoc[]
+
 == Promotion API
 
 === 프로모션 생성

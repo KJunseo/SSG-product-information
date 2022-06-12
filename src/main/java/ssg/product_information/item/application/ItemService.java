@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ssg.product_information.exception.item.NoSuchItemException;
 import ssg.product_information.item.application.adapter.ItemAdapter;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
+import ssg.product_information.item.application.dto.response.ItemPromotionResponseDto;
 import ssg.product_information.item.application.dto.response.ItemResponseDto;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemRepository;
+import ssg.product_information.item.domain.discount.DiscountPolicy;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
 import ssg.product_information.user.application.UserService;
 import ssg.product_information.user.domain.User;
@@ -65,5 +67,18 @@ public class ItemService {
                                       .collect(Collectors.toList());
 
         return ItemAssembler.itemResponseDtos(items);
+    }
+
+    @Transactional(readOnly = true)
+    public ItemPromotionResponseDto findItemPromotionByItemId(Long id) {
+        Item item = findById(id);
+
+        item.getAllPromotion()
+            .forEach(promotion -> {
+                DiscountPolicy discountPolicy = itemAdapterService.discountPolicyByPromotion(promotion);
+                item.discount(discountPolicy, promotion);
+            });
+
+        return ItemAssembler.itemPromotionResponseDto(item);
     }
 }

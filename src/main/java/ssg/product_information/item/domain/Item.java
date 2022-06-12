@@ -3,11 +3,15 @@ package ssg.product_information.item.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 
 import ssg.product_information.exception.item.InPromotionException;
 import ssg.product_information.exception.item.ItemDisplayPeriodException;
 import ssg.product_information.exception.promotion.PromotionItemDisplayPeriodException;
+import ssg.product_information.item.domain.discount.DiscountPolicy;
+import ssg.product_information.promotion.domain.Promotion;
 import ssg.product_information.promotion.domain.PromotionItem;
 
 @Entity
@@ -30,6 +34,12 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<PromotionItem> promotionItems = new ArrayList<>();
+
+    @Transient
+    private Promotion promotion;
+
+    @Transient
+    private Integer discountPrice;
 
     protected Item() {
     }
@@ -72,6 +82,20 @@ public class Item {
         return !(now.isBefore(this.itemDisplayStartDate) || now.isAfter(this.itemDisplayEndDate));
     }
 
+    public List<Promotion> getAllPromotion() {
+        return promotionItems.stream()
+                             .map(PromotionItem::getPromotion)
+                             .collect(Collectors.toList());
+    }
+
+    public void discount(DiscountPolicy discountPolicy, Promotion promotion) {
+        int discountPrice = discountPolicy.apply(promotion, this.itemPrice);
+        if (Objects.isNull(this.discountPrice) || (discountPrice < this.discountPrice)) {
+            this.discountPrice = discountPrice;
+            this.promotion = promotion;
+        }
+    }
+
     public Long getId() {
         return id;
     }
@@ -94,6 +118,14 @@ public class Item {
 
     public LocalDate getItemDisplayEndDate() {
         return itemDisplayEndDate;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public Integer getDiscountPrice() {
+        return discountPrice;
     }
 
     public List<PromotionItem> getPromotionItems() {

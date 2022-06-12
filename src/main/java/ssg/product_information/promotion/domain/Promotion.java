@@ -99,6 +99,14 @@ public class Promotion {
                       .forEach(item -> item.checkDisplayPeriod(this.promotionStartDate, this.promotionEndDate));
     }
 
+    public boolean isDiscountAmount() {
+        return !Objects.isNull(discountAmount);
+    }
+
+    public boolean isDiscountRate() {
+        return !Objects.isNull(discountRate);
+    }
+
     public Long getId() {
         return id;
     }
