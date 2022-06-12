@@ -39,6 +39,10 @@ public class User {
         this.userStat = UserStat.WITHDRAWAL;
     }
 
+    public boolean isGeneralUser() {
+        return UserType.GENERAL.equals(this.userType);
+    }
+
     public Long getId() {
         return id;
     }
