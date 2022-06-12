@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ssg.product_information.exception.item.NoSuchItemException;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemRepository;
@@ -27,5 +28,18 @@ public class ItemService {
     @Transactional(readOnly = true)
     public List<Item> findItemsByIds(List<Long> products) {
         return itemRepository.findAllById(products);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Item item = findById(id);
+        item.checkInPromotion();
+        itemRepository.delete(item);
+    }
+
+    @Transactional(readOnly = true)
+    public Item findById(Long id) {
+        return itemRepository.findById(id)
+                             .orElseThrow(NoSuchItemException::new);
     }
 }
