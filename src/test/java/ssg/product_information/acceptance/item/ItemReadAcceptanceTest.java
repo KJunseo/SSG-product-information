@@ -14,6 +14,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
 import ssg.product_information.acceptance.AcceptanceTest;
+import ssg.product_information.exception.dto.ExceptionResponse;
 import ssg.product_information.item.presentation.dto.request.ItemCreateRequest;
 import ssg.product_information.item.presentation.dto.response.ItemResponse;
 import ssg.product_information.user.presentation.dto.request.UserCreateRequest;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ssg.product_information.acceptance.item.ItemCreateAcceptanceTest.itemCreate;
 import static ssg.product_information.acceptance.user.UserCreateAcceptanceTest.userCreate;
+import static ssg.product_information.acceptance.user.UserDeleteAcceptanceTest.사용자_탈퇴_요청;
 
 @DisplayName("상품 조회 인수테스트")
 public class ItemReadAcceptanceTest extends AcceptanceTest {
@@ -72,6 +74,23 @@ public class ItemReadAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         assertThat(result).hasSize(4);
+    }
+
+    @Test
+    @DisplayName("탈퇴한 회원이라면 조회할 수 없다.")
+    void withdrawalUser() {
+        // given
+        UserCreateRequest request = new UserCreateRequest("김준서", "기업회원");
+        Long id = userCreate(request);
+        사용자_탈퇴_요청(id);
+
+        // when
+        ExtractableResponse<Response> response = 사용자별_구매_가능_상품_목록_조회_요청(id);
+        ExceptionResponse result = response.as(new TypeRef<>() {});
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(result.getMessage()).isEqualTo("존재하지 않는 유저입니다.");
     }
 
     public ExtractableResponse<Response> 사용자별_구매_가능_상품_목록_조회_요청(Long id) {

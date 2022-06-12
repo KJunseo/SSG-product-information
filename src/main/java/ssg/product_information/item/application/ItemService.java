@@ -14,8 +14,6 @@ import ssg.product_information.item.domain.ItemType;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
 import ssg.product_information.user.application.UserService;
 import ssg.product_information.user.domain.User;
-import ssg.product_information.user.domain.UserStat;
-import ssg.product_information.user.domain.UserType;
 
 @Service
 public class ItemService {
@@ -55,6 +53,7 @@ public class ItemService {
     @Transactional(readOnly = true)
     public List<ItemResponseDto> findItemsByUserId(Long id) {
         User user = userService.findById(id);
+        user.checkWithdrawal();
 
         if (user.isGeneralUser()) {
             List<Item> result = itemRepository.findAllByItemType(ItemType.GENERAL_MEMBERSHIP);

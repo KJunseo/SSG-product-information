@@ -33,10 +33,14 @@ public class User {
     }
 
     public void withdrawal() {
+        checkWithdrawal();
+        this.userStat = UserStat.WITHDRAWAL;
+    }
+
+    public void checkWithdrawal() {
         if (UserStat.WITHDRAWAL.equals(this.userStat)) {
             throw new NoSuchUserException();
         }
-        this.userStat = UserStat.WITHDRAWAL;
     }
 
     public boolean isGeneralUser() {
