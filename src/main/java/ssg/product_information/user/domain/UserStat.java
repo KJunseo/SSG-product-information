@@ -2,7 +2,7 @@ package ssg.product_information.user.domain;
 
 public enum UserStat {
     NORMAL("정상"),
-    WITHDRAW("탈퇴");
+    WITHDRAWAL("탈퇴");
 
     private final String stat;
 

@@ -49,6 +49,24 @@ include::{snippets}/UserCreateAcceptanceTest/emptyType/http-response.adoc[]
 ===== 존재하지 않는 타입이 들어온 경우
 include::{snippets}/UserCreateAcceptanceTest/noSuchUserType/http-response.adoc[]
 
+=== 사용자 삭제
+==== Request
+|===
+| 값 | 타입 | 필수 | 설명
+| id | Long | true | 사용자 Id
+|===
+include::{snippets}/UserDeleteAcceptanceTest/withdrawal/http-request.adoc[]
+
+==== Response
+===== 성공
+include::{snippets}/UserDeleteAcceptanceTest/withdrawal/http-response.adoc[]
+
+===== 존재하지 않는 사용자인 경우
+include::{snippets}/UserDeleteAcceptanceTest/notExist/http-response.adoc[]
+
+===== 이미 탈퇴한 사용자인 경우
+include::{snippets}/UserDeleteAcceptanceTest/alreadyWithdrawal/http-response.adoc[]
+
 == Item API
 
 === 상품 생성

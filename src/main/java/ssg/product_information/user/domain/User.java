@@ -2,6 +2,8 @@ package ssg.product_information.user.domain;
 
 import javax.persistence.*;
 
+import ssg.product_information.exception.user.NoSuchUserException;
+
 @Entity(name = "users")
 public class User {
 
@@ -21,9 +23,20 @@ public class User {
     }
 
     public User(String name, UserType type) {
-        this.userName = name;
-        this.userType = type;
-        this.userStat = UserStat.NORMAL;
+        this(name, type, UserStat.NORMAL);
+    }
+
+    public User(String userName, UserType userType, UserStat userStat) {
+        this.userName = userName;
+        this.userType = userType;
+        this.userStat = userStat;
+    }
+
+    public void withdrawal() {
+        if (UserStat.WITHDRAWAL.equals(this.userStat)) {
+            throw new NoSuchUserException();
+        }
+        this.userStat = UserStat.WITHDRAWAL;
     }
 
     public Long getId() {
