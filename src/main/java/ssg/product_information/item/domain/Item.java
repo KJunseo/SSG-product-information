@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+import ssg.product_information.exception.item.InPromotionException;
 import ssg.product_information.exception.item.ItemDisplayPeriodException;
 import ssg.product_information.exception.promotion.PromotionItemDisplayPeriodException;
 import ssg.product_information.promotion.domain.PromotionItem;
@@ -57,6 +58,12 @@ public class Item {
     public void checkDisplayPeriod(LocalDate startDate, LocalDate endDate) {
         if (itemDisplayStartDate.isAfter(startDate) || itemDisplayEndDate.isBefore(endDate)) {
             throw new PromotionItemDisplayPeriodException();
+        }
+    }
+
+    public void checkInPromotion() {
+        if (!promotionItems.isEmpty()) {
+            throw new InPromotionException();
         }
     }
 

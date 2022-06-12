@@ -33,6 +33,7 @@ public class ItemService {
     @Transactional
     public void delete(Long id) {
         Item item = findById(id);
+        item.checkInPromotion();
         itemRepository.delete(item);
     }
 

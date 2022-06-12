@@ -264,7 +264,13 @@ public class PromotionCreateAcceptanceTest extends AcceptanceTest {
         assertThat(result.getMessage()).isEqualTo("프로모션에 포함된 상품의 전시 기간이 올바르지 않습니다.");
     }
 
-    private ExtractableResponse<Response> 새로운_프로모션_정보_등록_요청(PromotionCreateRequest request) {
+    public static Long promotionCreate(PromotionCreateRequest request) {
+        ExtractableResponse<Response> response = 새로운_프로모션_정보_등록_요청(request);
+        String location = response.header("Location");
+        return Long.parseLong(location.substring(location.length() - 1));
+    }
+
+    public static ExtractableResponse<Response> 새로운_프로모션_정보_등록_요청(PromotionCreateRequest request) {
         return RestAssured.given(spec)
                           .log().all()
                           .contentType(APPLICATION_JSON_VALUE)
