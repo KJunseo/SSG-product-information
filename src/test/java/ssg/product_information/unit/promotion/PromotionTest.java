@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import ssg.product_information.exception.promotion.PromotionItemDisplayPeriodException;
-import ssg.product_information.exception.promotion.PromotionPeriodException;
 import ssg.product_information.exception.promotion.PromotionItemNumberException;
+import ssg.product_information.exception.promotion.PromotionPeriodException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemType;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ssg.product_information.exception.promotion.NoSuchPromotionException;
 import ssg.product_information.item.application.ItemService;
 import ssg.product_information.item.domain.Item;
 import ssg.product_information.promotion.application.dto.request.PromotionCreateRequestDto;
@@ -35,5 +36,17 @@ public class PromotionService {
         promotion.addItems(items);
         Promotion savedPromotion = promotionRepository.save(promotion);
         return savedPromotion.getId();
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Promotion promotion = findById(id);
+        promotionRepository.delete(promotion);
+    }
+
+    @Transactional(readOnly = true)
+    public Promotion findById(Long id) {
+        return promotionRepository.findById(id)
+                                  .orElseThrow(NoSuchPromotionException::new);
     }
 }

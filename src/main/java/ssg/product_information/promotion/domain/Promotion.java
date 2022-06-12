@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 
-import ssg.product_information.exception.promotion.PromotionPeriodException;
 import ssg.product_information.exception.promotion.PromotionItemNumberException;
+import ssg.product_information.exception.promotion.PromotionPeriodException;
 import ssg.product_information.exception.promotion.ViolateDiscountPolicyException;
 import ssg.product_information.item.domain.Item;
 
@@ -29,7 +29,7 @@ public class Promotion {
 
     private LocalDate promotionEndDate;
 
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<PromotionItem> promotionItems = new ArrayList<>();
 
     protected Promotion() {
