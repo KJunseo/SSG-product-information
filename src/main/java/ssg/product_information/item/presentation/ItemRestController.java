@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import ssg.product_information.item.application.ItemService;
 import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
+import ssg.product_information.item.application.dto.response.ItemPromotionResponseDto;
 import ssg.product_information.item.application.dto.response.ItemResponseDto;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
 import ssg.product_information.item.presentation.dto.request.ItemCreateRequest;
+import ssg.product_information.item.presentation.dto.response.ItemPromotionResponse;
 import ssg.product_information.item.presentation.dto.response.ItemResponse;
 
 @RequestMapping("/items")
@@ -41,6 +43,13 @@ public class ItemRestController {
     public ResponseEntity<List<ItemResponse>> itemsByUser(@RequestParam("userId") Long id) {
         List<ItemResponseDto> responseDto = itemService.findItemsByUserId(id);
         List<ItemResponse> result = ItemAssembler.itemResponses(responseDto);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{id}/promotions")
+    public ResponseEntity<ItemPromotionResponse> itemPromotion(@PathVariable Long id) {
+        ItemPromotionResponseDto responseDto = itemService.findItemPromotionByItemId(id);
+        ItemPromotionResponse result = ItemAssembler.itemPromotionResponse(responseDto);
         return ResponseEntity.ok(result);
     }
 }

@@ -99,6 +99,19 @@ public class Promotion {
                       .forEach(item -> item.checkDisplayPeriod(this.promotionStartDate, this.promotionEndDate));
     }
 
+    public boolean isDiscountAmount() {
+        return !Objects.isNull(discountAmount);
+    }
+
+    public boolean isDiscountRate() {
+        return !Objects.isNull(discountRate);
+    }
+
+    public boolean isProgress() {
+        LocalDate now = LocalDate.now();
+        return !(now.isBefore(this.promotionStartDate) || now.isAfter(this.promotionEndDate));
+    }
+
     public Long getId() {
         return id;
     }
@@ -121,9 +134,5 @@ public class Promotion {
 
     public LocalDate getPromotionEndDate() {
         return promotionEndDate;
-    }
-
-    public List<PromotionItem> getPromotionItems() {
-        return promotionItems;
     }
 }
