@@ -15,6 +15,7 @@ import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemRepository;
 import ssg.product_information.item.domain.discount.DiscountPolicy;
 import ssg.product_information.item.presentation.dto.ItemAssembler;
+import ssg.product_information.promotion.domain.Promotion;
 import ssg.product_information.user.application.UserService;
 import ssg.product_information.user.domain.User;
 
@@ -74,6 +75,8 @@ public class ItemService {
         Item item = findById(id);
 
         item.getAllPromotion()
+            .stream()
+            .filter(Promotion::isProgress)
             .forEach(promotion -> {
                 DiscountPolicy discountPolicy = itemAdapterService.discountPolicyByPromotion(promotion);
                 item.discount(discountPolicy, promotion);

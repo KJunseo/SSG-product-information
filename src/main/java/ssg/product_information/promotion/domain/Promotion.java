@@ -107,6 +107,11 @@ public class Promotion {
         return !Objects.isNull(discountRate);
     }
 
+    public boolean isProgress() {
+        LocalDate now = LocalDate.now();
+        return !(now.isBefore(this.promotionStartDate) || now.isAfter(this.promotionEndDate));
+    }
+
     public Long getId() {
         return id;
     }
