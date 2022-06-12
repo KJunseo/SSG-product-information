@@ -15,7 +15,6 @@ import ssg.product_information.user.domain.UserStat;
 import ssg.product_information.user.domain.UserType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("사용자 통합 테스트")
 public class UserIntegrationTest extends IntegrationTest {

@@ -6,9 +6,6 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ssg.product_information.item.application.dto.request.ItemCreateRequestDto;
-import ssg.product_information.item.presentation.dto.ItemAssembler;
-import ssg.product_information.item.presentation.dto.request.ItemCreateRequest;
 import ssg.product_information.promotion.application.PromotionService;
 import ssg.product_information.promotion.application.dto.PromotionAssembler;
 import ssg.product_information.promotion.application.dto.request.PromotionCreateRequestDto;
