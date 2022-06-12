@@ -135,8 +135,4 @@ public class Promotion {
     public LocalDate getPromotionEndDate() {
         return promotionEndDate;
     }
-
-    public List<PromotionItem> getPromotionItems() {
-        return promotionItems;
-    }
 }

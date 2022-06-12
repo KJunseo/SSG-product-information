@@ -55,14 +55,6 @@ public class User {
         return id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
     public UserStat getUserStat() {
         return userStat;
     }

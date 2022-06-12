@@ -131,8 +131,4 @@ public class Item {
     public Integer getDiscountPrice() {
         return discountPrice;
     }
-
-    public List<PromotionItem> getPromotionItems() {
-        return promotionItems;
-    }
 }

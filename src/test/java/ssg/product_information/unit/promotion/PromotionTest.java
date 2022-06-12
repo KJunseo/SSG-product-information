@@ -15,8 +15,7 @@ import ssg.product_information.item.domain.Item;
 import ssg.product_information.item.domain.ItemType;
 import ssg.product_information.promotion.domain.Promotion;
 
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("프로모션 단위 테스트")
 class PromotionTest {
@@ -120,5 +119,22 @@ class PromotionTest {
         // when & then
         assertThatThrownBy(() -> promotion.addItems(List.of(item)))
                 .isInstanceOf(PromotionItemDisplayPeriodException.class);
+    }
+
+    @Test
+    @DisplayName("현재 시점이 프로모션 기간에 포함되는지 판별")
+    void isDisplay() {
+        // given
+        LocalDate now = LocalDate.now();
+        Promotion promotion1 = new Promotion("쓱데이", 2000, now.minusDays(10), now.plusDays(10));
+        Promotion promotion2 = new Promotion("쓱데이", 2000, now.plusDays(5), now.plusDays(10));
+
+        // when
+        boolean progress = promotion1.isProgress();
+        boolean notProgress = promotion2.isProgress();
+
+        // then
+        assertThat(progress).isTrue();
+        assertThat(notProgress).isFalse();
     }
 }
